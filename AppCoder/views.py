@@ -1,18 +1,20 @@
-from django.shortcuts import render
-from AppCoder.models import Curso
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from AppCoder.models import Curso, Estudiante
 
+def mostrar_cursos(request):
+    cursos = Curso.objects.all()
+    contexto = {
+        "cursos": cursos
+    }
+    return render(request, "AppCoder/cursos.html", contexto)
 
 def crear_curso(request):
-    curso = Curso(nombre="Python", camada=47783)
-    curso.save()
-    contexto = {"curso": curso}
-
-    return render(request, 'index.html', contexto)
-
+    nuevo_curso = Curso(nombre="Python", camada=4778383)
+    nuevo_curso.save()
+    return redirect("/app/cursos")
 
 def show_html(request):
-    curso = Curso.objects.first()
-    contexto = {"curso": curso, "nombre": "Martin"}
-
+    cursos = Curso.objects.all()
+    contexto = {"cursos": cursos, "nombre": "Martin"}
     return render(request, 'index.html', contexto)
+
